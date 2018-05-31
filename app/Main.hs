@@ -4,8 +4,7 @@ module Main where
 
 import qualified Data.ByteString.Lazy as BL
 import Data.Digest.CRC32 (crc32)
-import Data.List (isInfixOf)
-import Data.Word
+import Data.Word (Word32)
 import System.Console.ANSI
 import System.Environment (getArgs)
 import System.Directory (doesFileExist)
@@ -31,7 +30,6 @@ checkFile :: FilePath -> IO ()
 checkFile fName = do
   h   <- openFile fName ReadMode
   crc <- BL.readFile fName >>= return . toHex . crc32
-  putStrLn crc
   case findHash fName of
     (fPre:fHash:fPost:_) -> do
       pFileName fPre fHash fPost
